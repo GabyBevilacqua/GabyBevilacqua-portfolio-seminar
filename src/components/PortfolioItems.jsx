@@ -1,34 +1,63 @@
-const PortfolioButton =({ title }) => {
-    return    <li class="nav-item">
-    <a class="nav-link" href="#">
-    { title }
-    </a>
-  </li>
-  
-}
+import { forwardRef } from "react";
 
-const PortfolioCard =({ portfolioItem }) => {
-    return(
-        <div class="card mb-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src={portfolioItem.image} class="img-fluid rounded-start" alt="foto de gato"/>
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{portfolioItem.title}</h5>
-        <p class="card-text">{portfolioItem.description}</p>
-        <p class="card-text">
-            <button className="btn btn-primary">See it in action!</button>
-            <button className="btn btn-secondary">See the code</button>
-        
-        </p>
+const PortfolioButton = ({ title, onClick }) => {
+  return (
+    <li className="nav-item">
+      <a className="nav-link" onClick={onClick}>
+        {title}
+      </a>
+    </li>
+  );
+};
+
+const PortfolioCard = forwardRef(function project(
+  { item, maxWidth = "540px" },
+  ref
+) {
+  return (
+    <div ref={ref} className="card mb-3" style={{ maxWidth: maxWidth }}>
+      <div className="row g-0">
+        <div className="col-md-4">
+          <img
+            src={item.image}
+            className="img-fluid rounded-start"
+            alt="foto de perro"
+          />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">{item.title}</h5>
+            <p className="card-text">{item.description}</p>
+            <div className="d-flex flex-row gap-3 justify-content-center">
+              {item.url ? (
+                <a
+                  href={item.url}
+                  className="btn btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See it in action!
+                </a>
+              ) : (
+                ""
+              )}
+              {item.repo ? (
+                <a
+                  href={item.repo}
+                  className="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the code
+                </a>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-    )
-}
-export {
-    PortfolioButton
-}
+  );
+});
+export { PortfolioButton, PortfolioCard };
